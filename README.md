@@ -8,6 +8,5 @@ A git addon to manage Jira from git.
 ```
 virtualenv env 
 source env/bin/activate
-pip
-pip install -r dev-requirements.txt
+pip install -e ".[dev]"
 ```
