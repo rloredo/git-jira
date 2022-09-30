@@ -24,7 +24,7 @@ setup(
     install_requires=[
         'click>=8.0',
         'jira>=3.4.1',
-        'PyYAML=6.0'
+        'PyYAML==6.0'
     ],
     extras_require={
         'dev': [
