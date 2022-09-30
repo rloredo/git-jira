@@ -35,6 +35,14 @@ def debug():
         click.echo("Config file not found. Run git jira config to generate.")
 
 
+def issue_fields_input():
+    fields = dict()
+    fields['summary'] = click.prompt('Summary', type=str)
+    fields['description'] = click.prompt('Description', type=str)
+    fields['issuetype'] = click.prompt('Issue type', type=click.Choice(ISSUE_TYPES))
+    return fields
+
+
 @click.command()
 def branch():
     click.echo("Branch command not implemented yet")

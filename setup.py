@@ -22,9 +22,10 @@ setup(
         git-jira=git_jira.cli:cli
     ''',
     install_requires=[
-        'click>=8.0',
-        'jira>=3.4.1',
-        'PyYAML==6.0'
+        'click==8.0',
+        'jira==3.4.1',
+        'PyYAML==6.0',
+        'sh==1.14.3',
     ],
     extras_require={
         'dev': [
