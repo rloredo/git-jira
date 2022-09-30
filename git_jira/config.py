@@ -1,6 +1,8 @@
 from pathlib import Path
 import yaml
 
+CONFIG_FILE_PATH = Path(Path.home() / ".git-jira" / "config.yaml")
+
 def config_params_to_str(jira_server_url:str, jira_username:str, jira_api_token:str, jira_default_project_key:str)->str:
     """
     Format the config params to be printed
@@ -9,7 +11,7 @@ def config_params_to_str(jira_server_url:str, jira_username:str, jira_api_token:
 
 def write_config_file(jira_server_url:str, jira_username:str, jira_api_token:str, jira_default_project_key:str)->None:
     """
-    Write the config dictionary as a yaml in .git-jira/config.yaml
+    Write the config dictionary as a yaml in CONFIG_FILE_PATH
     """
     jira_config = {
         'jira': {
@@ -19,15 +21,21 @@ def write_config_file(jira_server_url:str, jira_username:str, jira_api_token:str
                 'jira_default_project_key' : jira_default_project_key,
                 },
     }
-    output_file = Path.home() / ".git-jira" / "config.yaml"
+    output_file = CONFIG_FILE_PATH
     output_file.parent.mkdir(exist_ok=True, parents=True)
     with open(output_file, 'w') as f:
         yaml.dump(jira_config, f)
     f.close()
 
 def config_file_exists():
-    path = Path(Path.home() / ".git-jira" / "config.yaml")
+    path = Path(CONFIG_FILE_PATH)
     return path.is_file()
 
-
-    
+def load_config():
+    path_to_config = CONFIG_FILE_PATH
+    if config_file_exists():
+        with open(path_to_config, 'r') as stream:
+            config_dict = yaml.safe_load(stream)
+        return config_dict
+    else:
+        raise Exception("No config file found. Run git jira config to generate.")
