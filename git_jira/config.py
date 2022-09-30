@@ -28,10 +28,16 @@ def write_config_file(jira_server_url:str, jira_username:str, jira_api_token:str
     f.close()
 
 def config_file_exists():
+    """
+    Test if the CONFIG_FILE_PATH exists
+    """
     path = Path(CONFIG_FILE_PATH)
     return path.is_file()
 
 def load_config():
+    """
+    Load the CONFIG_FILE as a dictionary
+    """
     if config_file_exists():
         with open(CONFIG_FILE_PATH, 'r') as stream:
             config_dict = yaml.safe_load(stream)
