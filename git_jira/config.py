@@ -3,14 +3,14 @@ import yaml
 
 CONFIG_FILE_PATH = Path(Path.home() / ".git-jira" / "config.yaml")
 
-def write_config_file(config_dict)->None:
+def write_config_file(config:dict)->None:
     """
     Write the config dictionary as a yaml in CONFIG_FILE_PATH
     """
     output_file = CONFIG_FILE_PATH
     output_file.parent.mkdir(exist_ok=True, parents=True)
     with open(output_file, 'w') as f:
-        yaml.dump(config_dict, f)
+        yaml.dump(config, f)
     f.close()
 
 def config_file_exists():
