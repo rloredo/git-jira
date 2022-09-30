@@ -32,9 +32,8 @@ def config_file_exists():
     return path.is_file()
 
 def load_config():
-    path_to_config = CONFIG_FILE_PATH
     if config_file_exists():
-        with open(path_to_config, 'r') as stream:
+        with open(CONFIG_FILE_PATH, 'r') as stream:
             config_dict = yaml.safe_load(stream)
         return config_dict
     else:
