@@ -1,5 +1,6 @@
 import click
-from git_jira.config import CONFIG_FILE_PATH, config_params_to_str, write_config_file, config_file_exists
+import yaml
+from git_jira.config import CONFIG_FILE_PATH, write_config_file, config_file_exists
 
 @click.group()
 def cli():
@@ -8,13 +9,14 @@ def cli():
 @click.command()
 def config():
     click.echo("Welcome to git-jira. Let's generate your config file...")
-    jira_server_url = click.prompt("Insert your Jira server url", type=str)
-    jira_username = click.prompt("Insert your Jira username", type=str)
-    jira_api_token = click.prompt("Create an API token here https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/ \nand insert your Jira API token", type=str)
-    jira_default_project_key = click.prompt("Select default project to use. \nLeave empty if you want to specify it as flags. Insert the short code (like TP, PJ, etc)", type=str) 
-    click.echo(f"A config.yaml file with the following params will be created at {CONFIG_FILE_PATH}\n\n{config_params_to_str(jira_server_url, jira_username, jira_api_token, jira_default_project_key)}\n")
+    config_dict = dict({'jira': dict()})
+    config_dict['jira']['jserver_url'] = click.prompt("Insert your Jira server url", type=str)
+    config_dict['jira']['username'] = click.prompt("Insert your Jira username", type=str)
+    config_dict['jira']['api_token'] = click.prompt("Create an API token here https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/ \nand insert your Jira API token", type=str)
+    config_dict['jira']['default_project_key'] = click.prompt("Select default project to use. \nLeave empty if you want to specify it as flags. Insert the short code (like TP, PJ, etc)", type=str) 
+    click.echo(f"A config.yaml file with the following params will be created at {CONFIG_FILE_PATH}\n\n{yaml.dump(config_dict)}")
     if click.confirm('Do you want to continue?'):
-        write_config_file(jira_server_url, jira_username, jira_api_token, jira_default_project_key)
+        write_config_file(config_dict)
         click.echo(f"Config file successfully created. Run git jira debug to test the connection.")
     else:
         click.echo(f"Configuration aborted.")
