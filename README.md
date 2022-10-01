@@ -1,8 +1,10 @@
 # git-jira
 
+[![PyPI](https://img.shields.io/pypi/v/git-jira.svg)](https://pypi.python.org/pypi/git-jira)
+
 A git addon to manage Jira from git.
 
-# Installation
+## Installation
 
 The easiest (and best) way to install git-jira is through pip:
 
@@ -10,8 +12,12 @@ The easiest (and best) way to install git-jira is through pip:
 pip install git-jira
 ```
 
-To make it work, you need a `config.yml` with your authentication credentials and default project.  
+To make it work, you need a `config.yaml` with your authentication credentials and default project.  
 Run `git jira config` to generate this file.
+
+## Caveats
+
+`git jira --help` won't work. To see the global help, run `git jira` or `git-jira --help`
 
 ## Development
 
