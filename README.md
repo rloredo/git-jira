@@ -15,7 +15,7 @@ pip install git-jira
 ```
 
 To make it work, you need a `config.yml` with your authentication credentials and default project.  
-Run `git jira config` to generate this file.
+Run `git jira configure` to generate this file.
 
 ## Development
 

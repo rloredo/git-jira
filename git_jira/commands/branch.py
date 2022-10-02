@@ -13,10 +13,9 @@ def issue_fields_input(issue_types):
     fields["issuetype"] = click.prompt("Issue type", type=click.Choice(issue_types))
     return fields
 
-
 @click.command()
 def branch():
-    Config().load
+    Config().load()
     issue_types = JiraProject().issue_types
     issue = JiraIssue(issue_fields_input(issue_types))
-    GitBranch(issue.branch_name)
+    GitBranch(issue.branch_name).create()

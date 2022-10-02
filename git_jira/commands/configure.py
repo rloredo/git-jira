@@ -17,7 +17,7 @@ def configure():
     click.echo("Welcome to git-jira. Let's generate your config file...")
     config = {"jira": jira_config_input()}
     click.echo(
-        f"A config file with the following params will be created at {Config().path}.\n"
+        f"A config file with the following params will be created at {Config().path} \n"
     )
     click.echo(f"{Config().str_content(config)}")
     if click.confirm("Do you want to continue?"):

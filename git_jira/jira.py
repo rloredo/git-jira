@@ -45,19 +45,21 @@ class JiraProject:
 
 
 class JiraIssue:
-    def __init__(self, fields):
-        self.summary = fields["summary"]
-        self.issue = Jira().jira.create_issue(self.fields)
+    def __init__(self, input_fields):
+        self.issue = Jira().jira.create_issue(self.fields(input_fields))
 
     @cached_property
     def project(self):
         return Jira().config["default_project_key"]
 
-    @cached_property
-    def fields(self, fields):
-        fields["issuetype"] = {"name": fields["issuetype"]}
-        fields["project"] = self.project
+    def fields(self, input_fields):
+        fields = dict()
+        fields["issuetype"] = {"name": input_fields["issuetype"]}
+        fields["project"] = {"key": self.project}
+        fields["summary"] = input_fields["summary"]
+        fields["description"] = input_fields["description"]
+        return fields
 
     @cached_property
     def branch_name(self):
-        return f"{self.issue.key}-{self.issue.summary.replace(' ', '-').lower()}"
+        return f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
