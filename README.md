@@ -2,7 +2,11 @@
 
 A git addon to manage Jira from git.
 
-# Installation
+## Prerequisites
+
+Create a Jira API token: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
+
+## Installation
 
 The easiest (and best) way to install git-jira is through pip:
 
