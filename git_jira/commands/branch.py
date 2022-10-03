@@ -1,30 +1,20 @@
 import click
+from pick import pick
 
 from git_jira.jira import JiraIssue, JiraMetaIssue
 from git_jira.git import GitBranch
-
-def array_input(field):
-    options_valid = False
-    options = [opt['value'] for opt in field['options']]
-    while options_valid == False:
-        input = click.prompt(f"{field['name']}. Multiple choice: {', '.join(options)}", type=str)
-        input = input.replace(' ', ',').replace(',,', ',').split(',')
-        for option in input:
-            if option in options:
-                options_valid = True
-            else:
-                options_valid = False
-                click.echo("Invalid option(s) selected. Please try again...")
-                break
-    return input
 
 def prompt_field(field):
     if field["type"] == "string":
         return click.prompt(field["name"], type=str)
     elif field["type"] == "option":
-        return {'value' : click.prompt(field["name"], type=click.Choice([opt["value"] for opt in field["options"]]))}
+        option, _ = pick([opt["value"] for opt in field["options"]], field["name"])
+        click.echo(f"{field['name']}: {option}")
+        return {'value' : option}
     elif field["type"] == "array":
-        return [{'value' : option} for option in array_input(field)]
+        response = pick([opt['value'] for opt in field['options']], field['name'], multiselect=True, min_selection_count=1)
+        click.echo(f"{field['name']}: {', '.join([option[0] for option in response])}")
+        return [{'value' : option[0]} for option in response]
 
 def issue_fields_input():
     meta_issue = JiraMetaIssue()

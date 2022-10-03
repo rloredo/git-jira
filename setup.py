@@ -26,6 +26,7 @@ setup(
         "jira==3.4.1",
         "PyYAML==6.0",
         "sh==1.14.3",
+        "pick==2.0.2",
     ],
     extras_require={
         "dev": [
