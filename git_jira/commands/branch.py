@@ -34,7 +34,7 @@ def issue_fields_input():
     fields["issuetype"] = {"name": click.prompt("Issue type", type=click.Choice(meta_issue.issue_type_names))}
     fields["summary"] = click.prompt("Summary", type=str)
     fields["description"] = click.prompt("Description", type=str)
-    #Iterate if there any other required
+    #Iterate if there is any other required
     for field in meta_issue.required_fields(fields["issuetype"]["name"]):
         if field['key'] not in ["project", "issuetype", "summary", "description", "reporter"]:
             fields[field['key']] = prompt_field(field)
