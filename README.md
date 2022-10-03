@@ -19,6 +19,23 @@ pip install git-jira
 To make it work, you need a `config.yml` with your authentication credentials and default project.  
 Run `git jira configure` to generate this file.
 
+## Usage
+
+### Configure
+
+`git jira configure` creates a `config.yaml` file with your credentials and default project id.  
+The **Jira server url** should have the format `https://yourservername.atlassian.net`. For now, the authentication only supports API tokens.  
+The **project id** should have the format `XX` and is the one that you can find at the beginning of the issues (e.g. `TP-123`).
+
+### Branch
+
+Use `git jira branch` to create an issue in Jira and checkout to a branch with the format `TP-1234-summary-of-issue`.  
+The creation will ask the required fields interactively.  
+For now, the supported field types are:
+
+- String
+- Dropdown (single choice)
+- Checkbox (multiple choice)
 
 ## Caveats
 
