@@ -21,7 +21,9 @@ def issue_fields_input():
     fields = dict()
     click.echo("Fill in the required fields")
     fields["project"] = {"key": meta_issue.project_code}
-    fields["issuetype"] = {"name": click.prompt("Issue type", type=click.Choice(meta_issue.issue_type_names))}
+    option, _ = pick(meta_issue.issue_type_names, "Issue type")
+    fields["issuetype"] = {"name": option}
+    click.echo(f"Issue type {option}")
     fields["summary"] = click.prompt("Summary", type=str)
     fields["description"] = click.prompt("Description", type=str)
     #Iterate if there is any other required
