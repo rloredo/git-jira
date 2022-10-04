@@ -4,15 +4,19 @@ from pick import pick
 from git_jira.jira import JiraIssue, JiraMetaIssue
 from git_jira.git import GitBranch
 
+INDICATOR = '>'
+
 def prompt_field(field):
     if field["type"] == "string":
         return click.prompt(field["name"], type=str)
+    elif field["type"] == "number":
+        return click.prompt(field["name"], type=float)
     elif field["type"] == "option":
-        option, _ = pick([opt["value"] for opt in field["options"]], field["name"])
+        option, _ = pick([opt["value"] for opt in field["options"]], field["name"], indicator=INDICATOR)
         click.echo(f"{field['name']}: {option}")
         return {'value' : option}
     elif field["type"] == "array":
-        response = pick([opt['value'] for opt in field['options']], field['name'], multiselect=True, min_selection_count=1)
+        response = pick([opt['value'] for opt in field['options']], f"{field['name']} (press SPACE to select, ENTER to continue", multiselect=True, min_selection_count=1, indicator=INDICATOR)
         click.echo(f"{field['name']}: {', '.join([option[0] for option in response])}")
         return [{'value' : option[0]} for option in response]
 
@@ -21,7 +25,7 @@ def issue_fields_input():
     fields = dict()
     click.echo("Fill in the required fields")
     fields["project"] = {"key": meta_issue.project_code}
-    option, _ = pick(meta_issue.issue_type_names, "Issue type")
+    option, _ = pick(meta_issue.issue_type_names, "Issue type", indicator=INDICATOR)
     fields["issuetype"] = {"name": option}
     click.echo(f"Issue type {option}")
     fields["summary"] = click.prompt("Summary", type=str)

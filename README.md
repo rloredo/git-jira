@@ -33,7 +33,8 @@ Use `git jira branch` to create an issue in Jira and checkout to a branch with t
 The creation will ask the required fields interactively.  
 For now, the supported field types are:
 
-- String
+- Short text, paragraph
+- Number
 - Dropdown (single choice)
 - Checkbox (multiple choice)
 
