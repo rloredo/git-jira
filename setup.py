@@ -9,7 +9,7 @@ setup(
     description="A git addon to manage Jira from git",
     long_description=README,
     long_description_content_type="text/markdown",
-    version="0.0.0",
+    version="0.1.0",
     license="MIT",
     author="rloredo",
     author_email="loredo.rod@gmail.com",
@@ -26,6 +26,7 @@ setup(
         "jira==3.4.1",
         "PyYAML==6.0",
         "sh==1.14.3",
+        "pick==2.0.2",
     ],
     extras_require={
         "dev": [

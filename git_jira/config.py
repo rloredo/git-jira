@@ -13,6 +13,7 @@ class Config(object):
         self.path = path
 
     def __getattr__(self, attr):
+        self.load()
         return self.config.get(attr)
 
     def str_content(self, config):
@@ -27,7 +28,7 @@ class Config(object):
                 config = yaml.safe_load(stream)
             self.config = config
         else:
-            raise Exception("No config file found. Run git jira config to generate.")
+            raise Exception("No config file found. Run git jira configure to generate.")
 
     def file_exists(self):
         """
