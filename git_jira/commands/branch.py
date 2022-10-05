@@ -27,7 +27,7 @@ def issue_fields_input():
     fields["project"] = {"key": meta_issue.project_code}
     option, _ = pick(meta_issue.issue_type_names, "Issue type", indicator=INDICATOR)
     fields["issuetype"] = {"name": option}
-    click.echo(f"Issue type {option}")
+    click.echo(f"Issue type: {option}")
     fields["summary"] = click.prompt("Summary", type=str)
     fields["description"] = click.prompt("Description", type=str)
     #Iterate if there is any other required
@@ -38,6 +38,6 @@ def issue_fields_input():
 
 @click.command()
 def branch():
-    issue = JiraIssue(issue_fields_input())
+    issue = JiraIssue(input_fields=issue_fields_input())
     GitBranch(issue.branch_name).create()
     click.echo(f"{issue.type} created at {issue.url}")

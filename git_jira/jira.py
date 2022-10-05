@@ -52,9 +52,16 @@ class JiraMetaIssue:
         return [field for field in self.available_fields(issue_type) if field['required']]
 
 class JiraIssue:
-    def __init__(self, input_fields):
-        self.issue = Jira().jira.create_issue(input_fields)
-        self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
-        self.type = input_fields["issuetype"]["name"]
-        self.branch_name = f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
+    def __init__(self, input_fields=None, issue_key = None):
+        if input_fields:
+            self.issue = Jira().jira.create_issue(input_fields)
+            self.type = input_fields["issuetype"]["name"]
+            self.branch_name = f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
+            self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
+        if issue_key:
+            self.issue = Jira().jira.issue(issue_key)
+            self.type = self.issue.fields.issuetype.name
+            self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
+        
+        
         
