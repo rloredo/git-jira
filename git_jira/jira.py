@@ -62,3 +62,9 @@ class JiraIssue:
             self.issue = Jira().jira.issue(issue_key)
             self.type = self.issue.fields.issuetype.name
             self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
+            self.status = self.issue.fields.status.name
+            self.summary = self.issue.fields.summary
+            try:
+                self.asignee = self.issue.fields.asignee.displayName
+            except:
+                self.asignee = 'Unassigned'
