@@ -68,3 +68,4 @@ class JiraIssue:
                 self.asignee = self.issue.fields.asignee.displayName
             except:
                 self.asignee = 'Unassigned'
+
