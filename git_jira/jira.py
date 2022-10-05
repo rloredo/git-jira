@@ -62,6 +62,3 @@ class JiraIssue:
             self.issue = Jira().jira.issue(issue_key)
             self.type = self.issue.fields.issuetype.name
             self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
-        
-        
-        
