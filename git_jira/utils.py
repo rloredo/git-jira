@@ -1,5 +1,7 @@
 from prettytable import PrettyTable
 
+INDICATOR = '>'
+
 def singleton(class_):
     instances = {}
 
