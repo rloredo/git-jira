@@ -82,7 +82,7 @@ class JiraIssue:
                 self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
                 self.status = self.issue.fields.status.name
                 self.summary = self.issue.fields.summary
-                self.available_statuses = [status['name'] for status in Jira().jira.transitions(self.issue) if status['isAvailable']]
+                self.available_statuses = [{"display_name":status['to']['name'], "name":status['name']} for status in Jira().jira.transitions(self.issue) if status['isAvailable'] and status['to']['name'] != self.status]
                 try:
                     self.assignee = self.issue.fields.assignee.displayName
                 except:
