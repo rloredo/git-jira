@@ -81,6 +81,6 @@ class JiraIssue:
             self.status = self.issue.fields.status.name
             self.summary = self.issue.fields.summary
             try:
-                self.asignee = self.issue.fields.asignee.displayName
+                self.assignee = self.issue.fields.assignee.displayName
             except:
-                self.asignee = 'Unassigned'
+                self.assignee = 'Unassigned'
