@@ -23,10 +23,11 @@ setup(
     """,
     install_requires=[
         "click==8.0",
-        "jira==3.4.1",
+        "jira==3.4",
         "PyYAML==6.0",
-        "sh==1.14.3",
-        "pick==2.0.2",
+        "sh==1.14",
+        "pick==2.0",
+        "prettytable==3.4"
     ],
     extras_require={
         "dev": [
