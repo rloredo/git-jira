@@ -35,6 +35,17 @@ For now, the supported field types are:
 - Dropdown (single choice)
 - Checkbox (multiple choice)
 
+You can also create a branch from an existing issue, using the issue code (TP-XX). For this, use `git jira branch -k <issue_key>`
+
+### List
+
+Use `git jira list` to list issues and their branches. By default, it list all issues in planned. You can use the flag `-s` or `--status` to change this behaviour.
+
+### Status
+
+Use `git jira status` to check the status of an issue specified in a branch. If you're in a branch `TP-10-issue-summary` this command will show you the info related to the Jira issue `TP-10`. 
+In the future you will be able to update the status and add comments using this command.
+
 ## Caveats
 
 `git jira --help` won't work. To see the global help, run `git jira` or `git-jira --help`
