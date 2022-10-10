@@ -39,12 +39,23 @@ You can also create a branch from an existing issue, using the issue code (TP-XX
 
 ### List
 
-Use `git jira list` to list issues and their branches. By default, it list all issues in planned. You can use the flag `-s` or `--status` to change this behaviour.
+Use `git jira list` to list issues and their branches. By default, it list all issues in planned. You can use the flag `-s` or `--status` to show issues with other statuses.
 
-### Status
+### Issue
 
-Use `git jira status` to check the status of an issue specified in a branch. If you're in a branch `TP-10-issue-summary` this command will show you the info related to the Jira issue `TP-10`. 
-In the future you will be able to update the status and add comments using this command.
+Use `git jira issue` to check the info of an issue specified in a branch. If you're in a branch `TP-10-issue-summary` this command will show you the info related to the Jira issue `TP-10`.  
+
+#### Status
+
+`-s` or `--status`: update the issue status.
+
+#### Assignee
+
+`-a` or `--assignee`: assign the issue to you or someone else.
+
+#### Comment
+
+`-c <text>` or `--comment <text>`: add a comment to the issue.
 
 ## Caveats
 

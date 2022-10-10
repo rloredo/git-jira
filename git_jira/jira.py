@@ -1,3 +1,4 @@
+import sys
 from functools import cached_property
 
 from jira import JIRA
@@ -73,14 +74,19 @@ class JiraIssue:
             self.branch_name = f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
             self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
         if issue_key:
-            self.issue = Jira().jira.issue(issue_key)
-            self.key = self.issue.key
-            self.type = self.issue.fields.issuetype.name
-            self.branch_name = f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
-            self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
-            self.status = self.issue.fields.status.name
-            self.summary = self.issue.fields.summary
             try:
-                self.assignee = self.issue.fields.assignee.displayName
-            except:
-                self.assignee = 'Unassigned'
+                self.issue = Jira().jira.issue(issue_key)
+                self.key = self.issue.key
+                self.type = self.issue.fields.issuetype.name
+                self.branch_name = f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
+                self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
+                self.status = self.issue.fields.status.name
+                self.summary = self.issue.fields.summary
+                self.available_statuses = [{"display_name":status['to']['name'], "name":status['name']} for status in Jira().jira.transitions(self.issue) if status['isAvailable'] and status['to']['name'] != self.status]
+                try:
+                    self.assignee = self.issue.fields.assignee.displayName
+                except:
+                    self.assignee = 'Unassigned'
+            except Exception as e:
+                print(e.text)
+                sys.exit(1)

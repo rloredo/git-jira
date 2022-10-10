@@ -7,7 +7,10 @@ class GitBranch:
             self.name = name
         else:
             self.name = str(git.branch("--show-current"))[:-1] #Find a better way
-            self.issue_key = re.match('^[A-Z]{2}-[0-9]*', self.name)[0]
+            try:
+                self.issue_key = re.match('^[A-Z]{2}-[0-9]*', self.name)[0]
+            except:
+                self.issue_key = None
 
     def create(self):
         git.checkout("-b", self.name)
