@@ -1,3 +1,5 @@
+from prettytable import PrettyTable
+
 def singleton(class_):
     instances = {}
 
@@ -7,3 +9,9 @@ def singleton(class_):
         return instances[class_]
 
     return getinstance
+
+def print_table(columns:list, rows:list[list])->None:
+    table = PrettyTable(field_names=columns)
+    table.add_rows(rows)
+    table.align = "l"
+    return table

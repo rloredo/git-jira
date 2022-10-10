@@ -37,7 +37,11 @@ def issue_fields_input():
     return fields
 
 @click.command()
-def branch():
-    issue = JiraIssue(input_fields=issue_fields_input())
+@click.option('-k', '--issue-key', 'issue_key', help='Create an branch using an existing issue', type=str)
+def branch(issue_key):
+    if issue_key:
+        issue = JiraIssue(issue_key = issue_key)
+    else:
+        issue = JiraIssue(input_fields=issue_fields_input())
     GitBranch(issue.branch_name).create()
     click.echo(f"{issue.type} created at {issue.url}")

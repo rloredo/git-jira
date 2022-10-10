@@ -11,3 +11,10 @@ class GitBranch:
 
     def create(self):
         git.checkout("-b", self.name)
+
+class GitRepo:
+    def __init__(self):
+        pass
+
+    def get_branches(self):
+        return [b for b in git("--no-pager", "branch", "--all", "--format='%(refname:short)'").stdout.decode().replace("'", "").split('\n') if len(b)>0]
