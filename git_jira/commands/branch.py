@@ -3,8 +3,9 @@ from pick import pick
 
 from git_jira.jira import JiraIssue, JiraMetaIssue
 from git_jira.git import GitBranch
+from git_jira.utils import INDICATOR
 
-INDICATOR = '>'
+
 
 def prompt_field(field):
     if field["type"] == "string":
