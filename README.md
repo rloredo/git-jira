@@ -37,6 +37,12 @@ For now, the supported field types are:
 
 You can also create a branch from an existing issue, using the issue code (TP-XX). For this, use `git jira branch -k <issue_key>`
 
+#### Format
+
+The default branch name format is `issue_key-issue_summary` replacing all non alphanumeric characters for `-`.
+You can override this by using the option `-f` or `--format` and passing a string. For example, if you want the format to be `feat/TP-123/summary-of-issue` just pass `feat/issue_key/issue_summary`. The replacement in the summary can't be changed.  
+In the future we will support to pass a default branch format to the yml file.
+
 ### List
 
 Use `git jira list` to list issues and their branches. By default, it list all issues in planned. You can use the flag `-s` or `--status` to show issues with other statuses.

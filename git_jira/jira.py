@@ -21,6 +21,7 @@ class Jira:
             self.config["server_url"],
             basic_auth=(self.config["username"], self.config["api_token"]),
         )
+        
 class JiraProject:
     def __init__(self, project_code=None):
         self.project_code = (
@@ -71,17 +72,16 @@ class JiraIssue:
             self.issue = Jira().jira.create_issue(input_fields)
             self.key = self.issue.key
             self.type = input_fields["issuetype"]["name"]
-            self.branch_name = f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
+            self.summary = self.issue.fields.summary
             self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
         if issue_key:
             try:
                 self.issue = Jira().jira.issue(issue_key)
                 self.key = self.issue.key
                 self.type = self.issue.fields.issuetype.name
-                self.branch_name = f"{self.issue.key}-{self.issue.fields.summary.replace(' ', '-').lower()}"
+                self.summary = self.issue.fields.summary
                 self.url = f"{Jira().config['server_url']}/browse/{self.issue.key}"
                 self.status = self.issue.fields.status.name
-                self.summary = self.issue.fields.summary
                 self.available_statuses = [{"display_name":status['to']['name'], "name":status['name']} for status in Jira().jira.transitions(self.issue) if status['isAvailable'] and status['to']['name'] != self.status]
                 try:
                     self.assignee = self.issue.fields.assignee.displayName
