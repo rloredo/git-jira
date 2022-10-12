@@ -12,7 +12,7 @@ def classify_issues(status):
     branches = GitRepo().get_branches_issue_keys()
     for issue_key in branches.keys():
          try:
-            issues[issue_key].update({"branches":' ,'.join(branches[issue_key])})
+            issues[issue_key].update({"branches":', '.join(branches[issue_key])})
          except:
             pass    
     return [[issue_key, issues[issue_key]['type'], issues[issue_key]['summary'], issues[issue_key]['branches'], issues[issue_key]['assignee']]  for issue_key in issues.keys()]
