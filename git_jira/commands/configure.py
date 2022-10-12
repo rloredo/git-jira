@@ -1,7 +1,5 @@
 import click
-
 from git_jira.config import Config
-
 
 def jira_config_input():
     config = dict()
@@ -10,7 +8,6 @@ def jira_config_input():
     config["api_token"] = click.prompt("Jira API token", type=str)
     config["default_project_key"] = click.prompt("Default project", type=str)
     return config
-
 
 @click.command()
 def configure():

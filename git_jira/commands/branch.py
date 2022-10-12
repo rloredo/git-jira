@@ -6,7 +6,6 @@ from git_jira.git import GitBranch
 from git_jira.utils import INDICATOR
 
 
-
 def prompt_field(field):
     if field["type"] == "string":
         return click.prompt(field["name"], type=str)
@@ -39,10 +38,13 @@ def issue_fields_input():
 
 @click.command()
 @click.option('-k', '--issue-key', 'issue_key', help='Create an branch using an existing issue', type=str)
-def branch(issue_key):
+@click.option('-f', '--format', 'branch_format', default = 'issue_key-summary', help='Specify a custom branch name, words issue_key and summary will be replaced with the issue key and summary', type=str)
+def branch(issue_key, branch_format):
     if issue_key:
         issue = JiraIssue(issue_key = issue_key)
+        msg = f"Branch created! See issue: {issue.url}"
     else:
         issue = JiraIssue(input_fields=issue_fields_input())
-    GitBranch(issue.branch_name).create()
-    click.echo(f"{issue.type} created at {issue.url}")
+        msg = f"{issue.type} created at {issue.url}"
+    GitBranch(issue_key=issue.key, issue_summary=issue.summary, name_format=branch_format).create()
+    click.echo(msg)
