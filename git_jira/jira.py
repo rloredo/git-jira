@@ -33,7 +33,7 @@ class JiraProject:
         Get issues from project. Do not get Epics.
         #TODO Return up to 25 ordered by date?
         """
-        return [JiraIssue(issue_key=i.raw['key']) for i in Jira().jira.search_issues(f'project = {self.project_code} AND status = {status} AND type != Epic')]
+        return [JiraIssue(issue_key=i.raw['key']) for i in Jira().jira.search_issues(f"project = {self.project_code} AND status = '{status}' AND type != Epic")]
 
 
 class JiraMetaIssue:
