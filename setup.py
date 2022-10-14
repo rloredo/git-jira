@@ -9,7 +9,7 @@ setup(
     description="A git addon to manage Jira from git",
     long_description=README,
     long_description_content_type="text/markdown",
-    version="0.4.1",
+    version="0.4.2",
     license="MIT",
     author="rloredo",
     author_email="loredo.rod@gmail.com",

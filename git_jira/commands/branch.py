@@ -38,7 +38,7 @@ def issue_fields_input():
 
 @click.command()
 @click.option('-k', '--issue-key', 'issue_key', help='Create an branch using an existing issue', type=str)
-@click.option('-f', '--format', 'branch_format', default = 'issue_key-summary', help='Specify a custom branch name, words issue_key and summary will be replaced with the issue key and summary', type=str)
+@click.option('-f', '--format', 'branch_format', default = 'issue_key-issue_summary', help='Specify a custom branch name, words issue_key and summary will be replaced with the issue key and summary', type=str)
 def branch(issue_key, branch_format):
     if issue_key:
         issue = JiraIssue(issue_key = issue_key)
