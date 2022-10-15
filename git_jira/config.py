@@ -1,9 +1,6 @@
 from pathlib import Path
-
 import yaml
-
 from git_jira.utils import singleton
-
 CONFIG_FILE_PATH = Path(Path.home() / ".git-jira" / "config.yaml")
 
 
@@ -17,7 +14,7 @@ class Config(object):
         return self.config.get(attr)
 
     def str_content(self, config):
-        return yaml.dump(config)
+        return yaml.dump(config, sort_keys=False)
 
     def load(self):
         """

@@ -1,6 +1,7 @@
 # git-jira
 
 [![PyPI](https://img.shields.io/pypi/v/git-jira.svg)](https://pypi.python.org/pypi/git-jira)
+[![Downloads](https://img.shields.io/pypi/dm/git-jira.svg)](https://pypistats.org/packages/git-jira)
 
 A git addon to manage Jira from git.
 

@@ -20,5 +20,6 @@ def configure():
     if click.confirm("Do you want to continue?"):
         Config().change(config)
         click.echo(f"Config file successfully created.")
+        click.echo("Thanks for using git-jira!")
     else:
         click.echo(f"Configuration aborted.")

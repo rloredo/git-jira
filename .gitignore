@@ -5,3 +5,4 @@ lib
 build
 dist
 .pypitoken
+.DS_Store
