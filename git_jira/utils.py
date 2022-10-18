@@ -12,7 +12,7 @@ def singleton(class_):
 
     return getinstance
 
-def print_table(columns:list, rows:list[list])->None:
+def print_table(columns, rows):
     table = PrettyTable(field_names=columns)
     table.add_rows(rows)
     table.align = "l"
