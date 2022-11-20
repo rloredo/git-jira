@@ -6,9 +6,7 @@ from git_jira.config import Config
 class GitBranch:
     def __init__(self, issue_key=None, issue_summary=None, name_format='issue_key-issue_summary'):
         if issue_key and issue_summary:
-            issue_summary = re.sub('[^a-zA-Z\d]','-', issue_summary).lower()
-            issue_summary = re.sub('-{2,}', '-', issue_summary)
-            self.name = name_format.replace('issue_key', issue_key).replace('issue_summary', issue_summary)
+            self.name = name_format.replace('issue_key', issue_key).replace('issue_summary', self.clean_issue_summary(issue_summary))
             self.issue_key = issue_key
         else:
             self.name = str(git.branch("--show-current"))[:-1] #Find a better way
@@ -19,6 +17,14 @@ class GitBranch:
 
     def create(self):
         git.checkout("-b", self.name)
+    
+    @staticmethod
+    def clean_issue_summary(issue_summary):
+        issue_summary = re.sub('[^a-zA-Z\d]','-', issue_summary).lower() #Replace all non chars/digit by -
+        issue_summary = re.sub('-{2,}', '-', issue_summary) #Replace double -
+        issue_summary = re.sub('^-', '', issue_summary) #Remove - at start
+        issue_summary = re.sub('-$', '', issue_summary) #Remove - at end
+        return issue_summary
 
 class GitRepo:
     def __init__(self):
