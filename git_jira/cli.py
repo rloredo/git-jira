@@ -8,13 +8,13 @@ from git_jira.commands.list import list
 
 @click.group(
     context_settings={"help_option_names": ["-h", "--help"]},
-    )
-
+)
 def cli():
     """A git addon to manage jira from git.
     For more info visit: https://github.com/rloredo/git-jira
     """
     pass
+
 
 cli.add_command(configure)
 cli.add_command(branch)

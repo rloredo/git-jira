@@ -27,7 +27,7 @@ setup(
         "PyYAML==6.0",
         "sh==1.14",
         "pick==2.0",
-        "prettytable==3.4"
+        "prettytable==3.4",
     ],
     extras_require={
         "dev": [

@@ -1,6 +1,7 @@
 from pathlib import Path
 import yaml
 from git_jira.utils import singleton
+
 CONFIG_FILE_PATH = Path(Path.home() / ".git-jira" / "config.yaml")
 
 
