@@ -1,10 +1,9 @@
 import click
 from pick import pick
-
 from git_jira.jira import JiraIssue, JiraMetaIssue
 from git_jira.git import GitBranch
 from git_jira.utils import INDICATOR
-
+from git_jira.commands.issue import assign_issue
 
 def prompt_field(field):
     if field["type"] == "string":
@@ -46,5 +45,8 @@ def branch(issue_key, branch_format):
     else:
         issue = JiraIssue(input_fields=issue_fields_input())
         msg = f"{issue.type} created at {issue.url}"
+        assignee = assign_issue(issue)
+        if assignee:
+            msg = f"{msg}. Assgined to: {assignee}"
     GitBranch(issue_key=issue.key, issue_summary=issue.summary, name_format=branch_format).create()
     click.echo(msg)

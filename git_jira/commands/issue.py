@@ -1,3 +1,4 @@
+import sys
 import click
 from pick import pick
 from git_jira.git import GitBranch
@@ -5,19 +6,25 @@ from git_jira.jira import Jira, JiraIssue
 from git_jira.utils import INDICATOR
 
 def update_status(issue):
-    new_value, _ = pick([status['display_name'] for status in issue.available_statuses], "Update to:", indicator=INDICATOR)
-    new_value_name = [status['name'] for status in issue.available_statuses if status['display_name'] == new_value][0]
-    Jira().jira.transition_issue(issue.issue, new_value_name)
+    new_value, _ = pick([status['display_name'] for status in issue.available_statuses]+["Cancel status update"], "Update to:", indicator=INDICATOR)
+    if new_value != "Cancel status update":
+        new_value_name = [status['name'] for status in issue.available_statuses if status['display_name'] == new_value][0]
+        Jira().jira.transition_issue(issue.issue, new_value_name)
+    else:
+        new_value = False    
     return new_value
 
 def assign_issue(issue):
-    new_value, _ = pick(["To me", "To another user"], "Assign issue to:", indicator=INDICATOR)
+    new_value, _ = pick(["To me", "To another user", "Do not assign"], "Assign issue to:", indicator=INDICATOR)
     j = Jira()
     if new_value == 'To me':
         assignee = j.config['username'] 
-    else:
+    elif new_value == 'To another user':
         assignee = click.prompt("User email", type=str)
-    j.jira.assign_issue(issue=issue.issue, assignee=assignee)
+    else:
+        assignee = False
+    if assignee:
+        j.jira.assign_issue(issue=issue.issue, assignee=assignee)
     return assignee
 
 @click.command()
@@ -31,10 +38,16 @@ def issue(status, assign, comment):
         issue = JiraIssue(issue_key = branch.issue_key)
         if status:
             new_value = update_status(issue)
-            click.echo(f"Status of issue {issue.key} updated to {new_value}")
+            if new_value:
+                click.echo(f"Status of issue {issue.key} updated to {new_value}")
+            else:
+                click.echo(f"Status update canceled.")
         elif assign:
             new_assignee = assign_issue(issue)
-            click.echo(f"Issue {issue.key} assigned to {new_assignee}")
+            if new_assignee:
+                click.echo(f"Issue {issue.key} assigned to {new_assignee}")
+            else:
+                click.echo(f"Issue assignation canceled.")
         elif comment:
             c = Jira().jira.add_comment(issue=issue.issue, body=comment)
             click.echo(f"Comment added. See it here: {issue.url}?focusedCommentId={c.id}")
