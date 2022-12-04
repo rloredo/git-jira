@@ -21,7 +21,8 @@ To make it work, you need a `config.yml` with your authentication credentials an
 Run `git jira configure` to generate this file.  
 
 The **Jira server url** should have the format `https://yourservername.atlassian.net`. For now, the authentication only supports API tokens.  
-The **project id** should have the format `XX` and is the one that you can find at the beginning of the issues (e.g. `TP-123`).
+The **project id** should have the format `XX` and is the one that you can find at the beginning of the issues (e.g. `TP-123`).  
+During the config you can also specify custom branch names. See `Branch>Format` section for more information.  
 
 ## Usage
 
@@ -41,8 +42,9 @@ You can also create a branch from an existing issue, using the issue code (TP-XX
 #### Format
 
 The default branch name format is `issue_key-issue_summary` replacing all non alphanumeric characters for `-`.
-You can override this by using the option `-f` or `--format` and passing a string. For example, if you want the format to be `feat/TP-123/summary-of-issue` just pass `feat/issue_key/issue_summary`. The replacement in the summary can't be changed.  
-In the future we will support to pass a default branch format to the yml file.
+You can override this by using the option `-f` or `--format`. This option will prompt a select menu that will show the formats you've specified while running `configure`. You can also select a custom format (using the last option).  
+For example, if you want the format to be `feat/TP-123/summary-of-issue` just pass `feat/issue_key/issue_summary`. The replacement for `-` in the summary can't be changed.  
+
 
 ### List
 

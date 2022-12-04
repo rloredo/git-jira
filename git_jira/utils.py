@@ -1,6 +1,7 @@
 from prettytable import PrettyTable
 
-INDICATOR = '>'
+INDICATOR = ">"
+
 
 def singleton(class_):
     instances = {}
@@ -11,6 +12,7 @@ def singleton(class_):
         return instances[class_]
 
     return getinstance
+
 
 def print_table(columns, rows):
     table = PrettyTable(field_names=columns)
