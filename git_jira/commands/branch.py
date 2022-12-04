@@ -1,5 +1,6 @@
 import click
 from pick import pick
+from git_jira.config import Config
 from git_jira.jira import JiraIssue, JiraMetaIssue
 from git_jira.git import GitBranch
 from git_jira.utils import INDICATOR
@@ -54,6 +55,26 @@ def issue_fields_input():
     return fields
 
 
+def pick_branch_format():
+    try:
+        options = Config().jira["branch_formats"]
+    except:
+        options = ["issue_key-issue_summary"]
+    option, _ = pick(
+        options + ["Specify custom branch format"],
+        "Select a branch format name",
+        indicator=INDICATOR,
+    )
+
+    if option == "Specify custom branch format":
+        option = click.prompt(
+            "Specify custom branch format.\nUse issue_key and issue_summary as placeholders",
+            type=str,
+        )
+
+    return option
+
+
 @click.command()
 @click.option(
     "-k",
@@ -65,12 +86,12 @@ def issue_fields_input():
 @click.option(
     "-f",
     "--format",
-    "branch_format",
-    default="issue_key-issue_summary",
-    help="Specify a custom branch name, words issue_key and summary will be replaced with the issue key and summary",
-    type=str,
+    is_flag=True,
+    show_default=False,
+    default=False,
+    help="Pick from the configured branch formats or specify a new one",
 )
-def branch(issue_key, branch_format):
+def branch(issue_key, format):
     if issue_key:
         issue = JiraIssue(issue_key=issue_key)
         msg = f"Branch created! See issue: {issue.url}"
@@ -80,7 +101,17 @@ def branch(issue_key, branch_format):
         assignee = assign_issue(issue)
         if assignee:
             msg = f"{msg}. Assgined to: {assignee}"
+
+    if format:
+        branch_format = pick_branch_format()
+    else:
+        try:
+            branch_format = Config().jira["branch_formats"][0]
+        except:
+            branch_format = "issue_key-issue_summary"
+
     GitBranch(
         issue_key=issue.key, issue_summary=issue.summary, name_format=branch_format
     ).create()
+
     click.echo(msg)
